@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: producer
+  name: producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: producer
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: producer
+    spec:
+      containers:
+        - image: eventproducer:0.0.1
+          name: producer
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}

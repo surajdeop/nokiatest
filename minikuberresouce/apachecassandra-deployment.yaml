@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: apachecassandra
+  name: apachecassandra
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: apachecassandra
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: apachecassandra
+    spec:
+      containers:
+        - image: cassandra
+          name: apachecassandra
+          ports:
+            - containerPort: 9042
+            - containerPort: 9160
+            - containerPort: 7199
+          resources: {}
+      restartPolicy: Always
+status: {}
