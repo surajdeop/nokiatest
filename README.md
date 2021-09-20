@@ -23,3 +23,4 @@ Swagger API access:
 http://localhost:8084/swagger-ui.html
 
 
+![Alt text](NokiaTestArchitect.jpg?raw=true "Architect")
