@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    restart: always
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    links:
+      - zookeeper:zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+  apachecassandra:
+    image: 'cassandra'
+    ports:
+      - "9042:9042"
+      - "9160:9160"
+      - "7199:7199"
+    container_name: 'apachecassandra'
+
+  consumer:
+    image: eventconsumer:0.0.1
+#    build:
+#      context: ./eventconsumer
+#      dockerfile: Dockerfile
+    container_name: consumer
+    restart: always
+    ports:
+      - 8084:8080
+    depends_on:
+      - kafka
+      - apachecassandra
+    links:
+      - kafka:kafka
+
+  producer:
+    image: eventproducer:0.0.1
+#    build:
+#      context: ./eventproducer
+#      dockerfile: Dockerfile
+    container_name: producer
+    restart: always
+    ports:
+      - 8085:8080
+    depends_on:
+      - kafka
+    links:
+      - kafka:kafka

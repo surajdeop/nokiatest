@@ -1,0 +1,16 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: kafka:9092
+      group-id: nokia_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  data:
+    cassandra:
+      keyspace-name: consumerevent
+      contact-points: apachecassandra
+      schema-action: create_if_not_exists
+      local-datacenter: datacenter1
+      entity-base-package: com.event.consumer
+
